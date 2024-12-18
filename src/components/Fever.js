@@ -25,7 +25,6 @@ const FeverScreen = () => {
       .then(response => {
         setFeverData(response.data);
         setLoading(false);
-        console.log('RESPONSE DATA', response.data);
       })
       .catch(error => {
         setError(error.message);
