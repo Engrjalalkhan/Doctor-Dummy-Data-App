@@ -10,23 +10,23 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
-
-const API_URL = 'https://dummyuser.vercel.app/users';
+import {useNavigation} from '@react-navigation/native';
+import {API_URLS} from '../servicess/services';
 
 const FeverScreen = () => {
   const [feverData, setFeverData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios
-      .get(API_URL)
+      .get(API_URLS.GET_USERS)
       .then(response => {
         setFeverData(response.data);
         setLoading(false);
         console.log('RESPONSE DATA', response.data);
       })
-
       .catch(error => {
         setError(error.message);
         setLoading(false);
@@ -49,13 +49,20 @@ const FeverScreen = () => {
     );
   }
 
+  const handleItemClick = item => {
+    navigation.navigate('FeverDetails', {user: item});
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         data={feverData}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => handleItemClick(item)} // Navigate to the details screen
+          >
             <Image source={{uri: item.avatar}} style={styles.image} />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>

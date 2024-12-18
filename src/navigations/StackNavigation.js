@@ -8,6 +8,7 @@ import SingUpScreen from '../screens/SingUpScreen';
 import ForgetScreen from '../screens/ForgetScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MainScreen from '../screens/MainScreen';
+import FeverDetails from '../screens/FeverDetais';
 import BottomTab from '../navigations/BottomTab';
 import DetailScreen from '../screens/DetailScreen';
 import Fever from '../components/Fever';
@@ -38,6 +39,7 @@ const App = () => {
         <Stack.Screen name="Stomach" component={Stomach} />
         <Stack.Screen name="Bon" component={Bon} />
         <Stack.Screen name="Allergy" component={Allergy} />
+        <Stack.Screen name="FeverDetails" component={FeverDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

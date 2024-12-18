@@ -73,7 +73,10 @@ const MainScreen = () => {
 
   return (
     <ScrollView>
-      <View style={styles.container} behavior="height" enabled={false}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="height"
+        enabled={false}>
         <View style={{backgroundColor: '#DF4B38', height: 250}}>
           <View style={styles.Header}>
             <TouchableOpacity>
@@ -147,7 +150,7 @@ const MainScreen = () => {
           ))}
         </ScrollView>
         {renderContent()}
-      </View>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
