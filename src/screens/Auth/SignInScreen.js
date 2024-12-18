@@ -1,4 +1,4 @@
-/* eslint-disable eqeqeq */
+
 /* eslint-disable react-native/no-inline-styles */
 import {
   StyleSheet,
@@ -9,10 +9,11 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -21,6 +22,21 @@ const SignInScreen = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  useEffect(() => {
+    const checkUserLoggedIn = async () => {
+      try {
+        const token = await AsyncStorage.getItem('userToken');
+        if (token) {
+          navigation.navigate('Home');
+        }
+      } catch (error) {
+        console.error('Error checking user token:', error);
+      }
+    };
+
+    checkUserLoggedIn();
+  }, [navigation]);
 
   const Goback = () => {
     navigation.navigate('welcome');
@@ -66,10 +82,15 @@ const SignInScreen = () => {
 
       const response = await axios.post(apiUrl, userData);
       console.log('============', response.data);
-      if (response.data.status == 'success') {
+
+      if (response.data.status === 'success') {
+        // Store token in AsyncStorage
+        await AsyncStorage.setItem('userToken', response.data.token);
+
+        // Navigate to Home screen
         navigation.navigate('Home');
       } else {
-        Alert.alert('Sorry', 'Invalid token');
+        Alert.alert('Sorry', 'Invalid credentials');
       }
     } catch (error) {
       console.error('Error during sign-in:', error);
@@ -129,9 +150,6 @@ const SignInScreen = () => {
         {passwordError && <Text style={styles.errorText}>{passwordError}</Text>}
 
         <TouchableOpacity style={styles.signInButton} onPress={handleSignIn}>
-          {/* {isloading ? (
-          <ActivityIndicator size={'small'} color={'#DF4B38'}/>
-        ) : ()} */}
           <Text style={styles.ButtonText}>SIGN IN</Text>
         </TouchableOpacity>
 
