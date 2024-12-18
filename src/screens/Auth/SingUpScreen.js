@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Picker} from '@react-native-picker/picker';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import Calendar from '../../components/Calendar';
+import CustomCalendar from '../../components/Calendar';
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
@@ -248,7 +248,7 @@ const SignUpScreen = () => {
         </TouchableOpacity>
       </ScrollView>
 
-      <Calendar
+      <CustomCalendar
         visible={isCalendarVisible}
         onClose={hideCalendar}
         onSelectDate={handleDateSelection}
