@@ -8,22 +8,19 @@ import {
   TouchableOpacity,
   ScrollView,
   Alert,
-  // ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import axios from 'axios'; // Import axios for API calls
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for showing/hiding password
-  const [emailError, setEmailError] = useState(''); // State to store email error message
-  const [passwordError, setPasswordError] = useState(''); // State to store password error message
-  // const [isloading, setIsloading] = useState(false); // State for API error messages
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const Goback = () => {
     navigation.navigate('welcome');
@@ -48,7 +45,6 @@ const SignInScreen = () => {
 
     setEmailError('');
     setPasswordError('');
-    // setIsloading(true);
 
     if (email.trim() === '') {
       setEmailError('Please enter your email');
@@ -61,19 +57,16 @@ const SignInScreen = () => {
     }
 
     if (!valid) {
-      // setIsloading(false);
       return;
     }
 
     try {
       const userData = {email, password};
-      // Replace with your API URL
       const apiUrl = 'http://192.168.18.209:3001/login-user';
 
       const response = await axios.post(apiUrl, userData);
       console.log('============', response.data);
       if (response.data.status == 'success') {
-        // await AsyncStorage.setItem('userToken',response.data.token);
         navigation.navigate('Home');
       } else {
         Alert.alert('Sorry', 'Invalid token');
@@ -81,9 +74,6 @@ const SignInScreen = () => {
     } catch (error) {
       console.error('Error during sign-in:', error);
     }
-    // finally{
-    //   setIsloading(false);
-    // }
   };
 
   const togglePasswordVisibility = () => {

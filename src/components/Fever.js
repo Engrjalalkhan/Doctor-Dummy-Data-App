@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-shadow */
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -6,56 +7,67 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
+import axios from 'axios';
 
-const FeverData = [
-  {
-    id: '1',
-    name: 'Dr. John Doe',
-    image: require('../assets/images/card.jpg'),
-    details: 'Specialist in Fever & Viral Infections',
-    experience: '10 years',
-    rating: 4.5,
-    reviews: 120,
-  },
-  {
-    id: '2',
-    name: 'Dr. Sarah Smith',
-    image: require('../assets/images/card.jpg'),
-    details: 'Expert in Infectious Diseases',
-    experience: '8 years',
-    rating: 4.8,
-    reviews: 95,
-  },
-  {
-    id: '3',
-    name: 'Dr. Emily White',
-    image: require('../assets/images/card.jpg'),
-    details: 'Experienced General Physician',
-    experience: '12 years',
-    rating: 4.2,
-    reviews: 60,
-  },
-];
+const API_URL = 'https://dummyuser.vercel.app/users';
 
 const FeverScreen = () => {
+  const [feverData, setFeverData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(API_URL)
+      .then(response => {
+        setFeverData(response.data);
+        setLoading(false);
+        console.log('RESPONSE DATA', response.data);
+      })
+
+      .catch(error => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#DF4B38" />
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Error: {error}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
-        data={FeverData}
-        keyExtractor={item => item.id}
+        data={feverData}
+        keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <TouchableOpacity style={styles.card}>
-            <Image source={item.image} style={styles.image} />
+            <Image source={{uri: item.avatar}} style={styles.image} />
             <View style={styles.infoContainer}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.details}>{item.details}</Text>
-              <Text style={styles.experience}>
-                Experience: {item.experience}
+              <Text style={styles.name}>
+                {item.first_name} {item.last_name}
               </Text>
-              <Text style={styles.rating}>
-                Rating: {item.rating} ({item.reviews} reviews)
+              <Text style={styles.details}>Username: {item.user.username}</Text>
+              <Text style={styles.details}>Email: {item.email}</Text>
+              <Text style={styles.details}>Phone: {item.Phone}</Text>
+              <Text style={styles.details}>
+                Location: {item.location.city}, {item.location.country}
               </Text>
+              <Text style={styles.age}>Age: {item.age}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -104,13 +116,25 @@ const styles = StyleSheet.create({
     color: '#555',
     marginBottom: 5,
   },
-  experience: {
+  age: {
     fontSize: 14,
     color: '#555',
-  },
-  rating: {
-    fontSize: 14,
-    color: '#ff9800',
     marginTop: 5,
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 16,
   },
 });
