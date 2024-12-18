@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   FlatList,
+  ScrollView,
   Image,
   TouchableOpacity,
   ActivityIndicator,
@@ -54,30 +55,29 @@ const FeverScreen = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={feverData}
-        keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleItemClick(item)} // Navigate to the details screen
-          >
-            <Image source={{uri: item.avatar}} style={styles.image} />
-            <View style={styles.infoContainer}>
-              <Text style={styles.name}>
-                {item.first_name} {item.last_name}
-              </Text>
-              <Text style={styles.details}>Username: {item.user.username}</Text>
-              <Text style={styles.details}>Email: {item.email}</Text>
-              <Text style={styles.details}>Phone: {item.Phone}</Text>
-              <Text style={styles.details}>
-                Location: {item.location.city}, {item.location.country}
-              </Text>
-              <Text style={styles.age}>Age: {item.age}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
+      <ScrollView style={{ flex: 1 }}>
+  {feverData.map(item => (
+    <TouchableOpacity
+      key={item.id}
+      style={styles.card}
+      onPress={() => handleItemClick(item)} // Navigate to the details screen
+    >
+      <Image source={{ uri: item.avatar }} style={styles.image} />
+      <View style={styles.infoContainer}>
+        <Text style={styles.name}>
+          {item.first_name} {item.last_name}
+        </Text>
+        <Text style={styles.details}>Username: {item.user.username}</Text>
+        <Text style={styles.details}>Email: {item.email}</Text>
+        <Text style={styles.details}>Phone: {item.Phone}</Text>
+        <Text style={styles.details}>
+          Location: {item.location.city}, {item.location.country}
+        </Text>
+        <Text style={styles.age}>Age: {item.age}</Text>
+      </View>
+    </TouchableOpacity>
+  ))}
+</ScrollView>
     </View>
   );
 };
