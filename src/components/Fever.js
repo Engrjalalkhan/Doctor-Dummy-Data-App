@@ -1,10 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-shadow */
 import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   ScrollView,
   Image,
   TouchableOpacity,
