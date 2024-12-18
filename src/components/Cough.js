@@ -1,9 +1,10 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  FlatList,
+  ScrollView,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -35,11 +36,10 @@ const CoughScreen = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={CoughData}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
+      <ScrollView style={{flex: 1}}>
+        {CoughData.map(item => (
           <TouchableOpacity
+            key={item.id}
             style={styles.card}
             onPress={() => navigation.navigate('CoughDetails', {doctor: item})}>
             <Image source={item.image} style={styles.image} />
@@ -54,8 +54,8 @@ const CoughScreen = () => {
               </Text>
             </View>
           </TouchableOpacity>
-        )}
-      />
+        ))}
+      </ScrollView>
     </View>
   );
 };

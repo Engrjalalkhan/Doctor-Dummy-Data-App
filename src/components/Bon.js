@@ -3,7 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
+  ScrollView,
   Image,
   TouchableOpacity,
 } from 'react-native';
@@ -44,11 +44,10 @@ const BoneScreen = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={BonData}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
+      <ScrollView style={{flex: 1}}>
+        {BonData.map(item => (
           <TouchableOpacity
+            key={item.id}
             style={styles.card}
             onPress={() => navigation.navigate('BoneDetails', {doctor: item})}>
             <Image source={item.image} style={styles.image} />
@@ -63,8 +62,8 @@ const BoneScreen = () => {
               </Text>
             </View>
           </TouchableOpacity>
-        )}
-      />
+        ))}
+      </ScrollView>
     </View>
   );
 };
