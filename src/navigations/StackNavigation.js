@@ -8,14 +8,16 @@ import SingUpScreen from '../screens/Auth/SingUpScreen';
 import ForgetScreen from '../screens/Auth/ForgetScreen';
 import HomeScreen from '../screens/HomeScreen';
 import MainScreen from '../screens/MainScreen';
-import FeverDetails from '../screens/FeverDetais';
 import BottomTab from '../navigations/BottomTab';
-import DetailScreen from '../screens/DetailScreen';
 import Fever from '../components/Fever';
 import Cough from '../components/Cough';
 import Stomach from '../components/Stomach';
 import Bon from '../components/Bon';
 import Allergy from '../components/Allergy';
+import DetailScreen from '../screens/DetailsScreen/DetailScreen';
+import FeverDetailsScreen from '../screens/DetailsScreen/FeverDetais';
+import CoughDetailsScreen from '../screens/DetailsScreen/CoughDetails';
+import BoneDetailsScreen from '../screens/DetailsScreen/BonDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +41,9 @@ const App = () => {
         <Stack.Screen name="Stomach" component={Stomach} />
         <Stack.Screen name="Bon" component={Bon} />
         <Stack.Screen name="Allergy" component={Allergy} />
-        <Stack.Screen name="FeverDetails" component={FeverDetails} />
+        <Stack.Screen name="FeverDetails" component={FeverDetailsScreen} />
+        <Stack.Screen name="CoughDetails" component={CoughDetailsScreen} />
+        <Stack.Screen name="BoneDetails" component={BoneDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

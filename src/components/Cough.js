@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const CoughData = [
   {
@@ -21,7 +22,7 @@ const CoughData = [
   {
     id: '2',
     name: 'Dr. Anna Brown',
-    image: require('..//assets/images/card1.jpg'),
+    image: require('../assets/images/card1.jpg'),
     details: 'Expert in Respiratory Issues',
     experience: '9 years',
     rating: 4.6,
@@ -30,13 +31,17 @@ const CoughData = [
 ];
 
 const CoughScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <FlatList
         data={CoughData}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate('CoughDetails', {doctor: item})}>
             <Image source={item.image} style={styles.image} />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>{item.name}</Text>
@@ -62,12 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
     padding: 10,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 10,
   },
   card: {
     flexDirection: 'row',

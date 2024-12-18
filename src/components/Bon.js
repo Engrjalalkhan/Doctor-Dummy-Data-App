@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const BonData = [
   {
@@ -38,14 +39,18 @@ const BonData = [
   },
 ];
 
-const FeverScreen = () => {
+const BoneScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <FlatList
         data={BonData}
         keyExtractor={item => item.id}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => navigation.navigate('BoneDetails', {doctor: item})}>
             <Image source={item.image} style={styles.image} />
             <View style={styles.infoContainer}>
               <Text style={styles.name}>{item.name}</Text>
@@ -64,19 +69,13 @@ const FeverScreen = () => {
   );
 };
 
-export default FeverScreen;
+export default BoneScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
     padding: 10,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 10,
   },
   card: {
     flexDirection: 'row',

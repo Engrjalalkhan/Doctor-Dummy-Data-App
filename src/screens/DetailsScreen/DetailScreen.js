@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 const DetailData = [
   {
     id: 1,
-    image: require('../assets/images/card.jpg'),
+    image: require('..//../assets/images/card.jpg'),
     name: 'Dr. Jhone',
     rating: 4.5,
     discription: 'Dental Specialist | Surgeon',
